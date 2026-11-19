@@ -1,0 +1,7 @@
+# What this twin is. Shown in the dashboard header and by GET /project.
+name: Water quality example
+description: >-
+  Two monitoring nodes on a stream, each reporting water temperature, pH, turbidity,
+  conductivity and dissolved oxygen every 15 minutes. An example layout, not a real site.
+timezone: America/Chicago        # display only; data is always stored in UTC
+key_channels: [water_temp, dissolved_oxygen, ph, turbidity]   # shown on the Overview cards

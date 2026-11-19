@@ -1,0 +1,23 @@
+description: >-
+  Bay air temperature three hours ahead, from its own history, light, outside temperature and
+  the time of day. Event: air temperature at or above 30 degC.
+target:
+  channel: air_temp
+  nodes: all
+resolution: 30min
+horizon_steps: 6                 # 6 x 30 min = 3 h
+seasonal_period_steps: 48        # same time yesterday
+event:
+  threshold: 30                  # example value; set your own action level
+  direction: above
+features:
+  target_lags: [0, 1, 2, 4, 8, 48]
+  rolling_windows: [6, 48]
+  channels:
+    light: [0, 2]
+    outside_temp: [0, 2, 6]
+  calendar: [hour_of_day]
+models:
+  ridge: {alpha: 1.0}
+  random_forest: {n_estimators: 150, min_samples_leaf: 5}
+  gradient_boosting: {max_iter: 200, learning_rate: 0.05, max_leaf_nodes: 15}

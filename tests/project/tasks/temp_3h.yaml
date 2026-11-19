@@ -1,0 +1,16 @@
+description: Water temperature three hours ahead (test task).
+target: {channel: water_temp, nodes: all}
+resolution: 1h
+horizon_steps: 3
+seasonal_period_steps: 24
+event: {threshold: 22.0, direction: above}
+features:
+  target_lags: [0, 1, 2, 24]
+  rolling_windows: [6]
+  channels: {air_temp: [0, 3]}
+  calendar: [hour_of_day]
+split: {n_folds: 3, holdout_frac: 0.2, min_train_rows: 50}
+models:
+  ridge: {alpha: 1.0}
+  random_forest: {n_estimators: 20, min_samples_leaf: 5}
+eval: {n_boot: 100}

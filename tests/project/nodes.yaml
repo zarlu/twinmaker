@@ -1,0 +1,5 @@
+schema_version: 1
+nodes:
+  - {node_id: node-intake, name: Intake, role: intake, position: 0}
+  - {node_id: node-downstream, name: Downstream, role: downstream, position: 10}
+  - {node_id: node-bench, name: Bench, role: bench}

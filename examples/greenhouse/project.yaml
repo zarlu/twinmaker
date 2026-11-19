@@ -1,0 +1,6 @@
+name: Greenhouse example
+description: >-
+  Two greenhouse bays reporting air temperature, humidity, soil moisture and light every
+  10 minutes, with outside temperature as an external series. An example layout, not a real site.
+timezone: UTC
+key_channels: [air_temp, humidity, soil_moisture, light]

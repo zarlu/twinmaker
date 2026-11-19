@@ -1,0 +1,50 @@
+# Channel registry for the greenhouse example. Field meanings: see docs/CONFIGURE.md.
+# The limits are starting points. Tune them on your own data.
+schema_version: 1
+channels:
+  air_temp:
+    label: Air temperature
+    unit: degC
+    default_kind: measurement
+    valid_min: -10
+    valid_max: 60
+    max_step_15min: 5
+    stuck_after: 18
+    description: Air temperature inside the bay.
+  humidity:
+    label: Relative humidity
+    unit: "%"
+    default_kind: measurement
+    valid_min: 0
+    valid_max: 100
+    max_step_15min: 25
+    stuck_after: 18
+    saturation_min: 99.5
+    description: Relative humidity inside the bay.
+  soil_moisture:
+    label: Soil moisture
+    unit: "%"
+    default_kind: measurement
+    valid_min: 0
+    valid_max: 100
+    max_step_15min: 15
+    stuck_after: 36
+    description: Volumetric soil moisture.
+  light:
+    label: Light
+    unit: lux
+    default_kind: measurement
+    valid_min: 0
+    valid_max: 150000
+    max_step_15min: null
+    stuck_after: null
+    description: Illuminance at canopy height.
+  outside_temp:
+    label: Outside temperature
+    unit: degC
+    default_kind: external
+    valid_min: -40
+    valid_max: 55
+    max_step_15min: 10
+    stuck_after: null
+    description: Outside air temperature from a weather source.

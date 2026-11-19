@@ -1,0 +1,11 @@
+schema_version: 1
+channels:
+  water_temp: {unit: degC, default_kind: measurement, valid_min: 0, valid_max: 45, max_step_15min: 3, stuck_after: 12, description: Water temperature.}
+  ph: {unit: pH, default_kind: measurement, valid_min: 4, valid_max: 11, max_step_15min: 1.0, stuck_after: 12}
+  tds: {unit: ppm, default_kind: measurement, valid_min: 0, valid_max: 1000, max_step_15min: 200, stuck_after: 12, saturation_min: 950}
+  turbidity: {unit: NTU, default_kind: measurement, valid_min: 0, valid_max: 1000, max_step_15min: 200, stuck_after: 12}
+  tds_raw_v: {unit: V, default_kind: measurement, valid_min: 0, valid_max: 5, max_step_15min: null, stuck_after: 12}
+  phosphate_po4: {unit: mg/L, default_kind: measurement, valid_min: 0, valid_max: 5, max_step_15min: 1.0, stuck_after: null}
+  chlorophyll_a: {unit: ug/L, default_kind: label, valid_min: 0, valid_max: 500, max_step_15min: null, stuck_after: null}
+  discharge: {unit: m3/s, default_kind: external, valid_min: 0, valid_max: 5000, max_step_15min: 500, stuck_after: null}
+  air_temp: {unit: degC, default_kind: external, valid_min: -10, valid_max: 50, max_step_15min: 10, stuck_after: null}

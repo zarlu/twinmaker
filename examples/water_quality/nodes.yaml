@@ -1,0 +1,19 @@
+# Measurement sites. `role` is free text. `position` orders the nodes on the dashboard.
+# lat/lon are optional. A node that sends data without being listed here is created
+# automatically with role `unknown`.
+schema_version: 1
+nodes:
+  - node_id: node-upstream        # lowercase letters, digits, '-' and '_'
+    name: Upstream node
+    role: upstream
+    lat: null
+    lon: null
+    position: 0
+    notes: Example node.
+  - node_id: node-downstream
+    name: Downstream node
+    role: downstream
+    lat: null
+    lon: null
+    position: 1
+    notes: Example node.

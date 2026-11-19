@@ -1,0 +1,62 @@
+# Invented data for testing the whole loop before real nodes exist. See sim/generate.py for
+# the exact formula. Every number here is an arbitrary choice made to exercise the pipeline;
+# none describes a real stream. All rows are stored with source='simulator'.
+step_minutes: 15
+utc_offset_hours: -6             # so the daily cycle peaks in local afternoon
+nodes:                           # omit to simulate every node of nodes.yaml unchanged
+  node-upstream: {}
+  node-downstream:
+    offsets: {water_temp: 0.8, turbidity: 6, dissolved_oxygen: -0.4}
+channels:
+  air_temp:
+    base: 24
+    daily: {amplitude: 6, peak_hour: 15}
+    noise: {sd: 2.5, memory: 0.995}      # slow weather swings
+    jitter: 0.2
+    decimals: 1
+  water_temp:
+    base: 22
+    daily: {amplitude: 0.8, peak_hour: 17}
+    noise: {sd: 0.3, memory: 0.98}
+    depends_on:
+      - {channel: air_temp, gain: 0.45, lag_hours: 4}   # water follows air a few hours later
+    jitter: 0.05
+    clip: [0, 40]
+    decimals: 2
+  turbidity:
+    base: 15
+    noise: {sd: 5, memory: 0.99}
+    jitter: 0.5
+    clip: [0, 900]
+    decimals: 1
+  conductivity:
+    base: 800
+    noise: {sd: 40, memory: 0.995}
+    jitter: 3
+    clip: [0, 5000]
+    decimals: 0
+  dissolved_oxygen:
+    base: 7.5
+    daily: {amplitude: 1.0, peak_hour: 15}
+    noise: {sd: 0.25, memory: 0.97}
+    depends_on:
+      - {channel: water_temp, gain: -0.35, lag_hours: 6}  # warmer water, less oxygen, later
+      - {channel: turbidity, gain: -0.01}
+    jitter: 0.05
+    clip: [0, 15]
+    decimals: 2
+  ph:
+    base: 7.8
+    daily: {amplitude: 0.1, peak_hour: 15}
+    noise: {sd: 0.08, memory: 0.98}
+    depends_on:
+      - {channel: dissolved_oxygen, gain: 0.08}
+    jitter: 0.01
+    clip: [4, 11]
+    decimals: 2
+events:                          # at_day counts from the start of the run; negative = from the end
+  - {channel: turbidity, at_day: -9, duration_hours: 30, ramp_hours: 5, delta: 120}
+faults:
+  spike: {channels: [turbidity, ph], per_day: 0.15, size: 300}     # out-of-family single values
+  stuck: {channels: [water_temp], per_week: 0.5, duration_hours: 4}
+  dropout: {per_week: 0.5, duration_hours: 3}                      # a node goes silent

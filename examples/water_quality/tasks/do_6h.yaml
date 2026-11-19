@@ -1,0 +1,30 @@
+# Forecast task: what to predict, how far ahead, from which inputs.
+# Only `target` is required; every other key has a default (see docs/TASKS.md).
+description: >-
+  Dissolved oxygen six hours ahead at each node, from its own recent history, water and air
+  temperature and the time of day. Event: dissolved oxygen at or below 6.0 mg/L.
+
+target:
+  channel: dissolved_oxygen
+  nodes: all                     # or a list of node ids
+
+resolution: 1h                   # readings are averaged onto this grid
+horizon_steps: 6                 # forecast 6 grid steps ahead = 6 h
+seasonal_period_steps: 24        # adds the "same time yesterday" baseline
+
+event:                           # optional: also estimate P(threshold crossed)
+  threshold: 6.0                 # example value; set your own action level
+  direction: below               # above | below
+
+features:
+  target_lags: [0, 1, 2, 3, 6, 12, 24]   # target value this many steps before issue time
+  rolling_windows: [6, 24]               # mean and spread of the target over the last N steps
+  channels:                              # other channels at the same node, with their lags
+    water_temp: [0, 3, 6]
+    air_temp: [0, 3, 6]
+  calendar: [hour_of_day]                # of the valid time
+
+models:                          # every listed model is backtested; settings are fixed
+  ridge: {alpha: 1.0}
+  random_forest: {n_estimators: 150, min_samples_leaf: 5}
+  gradient_boosting: {max_iter: 200, learning_rate: 0.05, max_leaf_nodes: 15}

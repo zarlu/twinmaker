@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "node_id": "node-downstream",
+  "source": "sensor",
+  "sent_at": "2026-10-10T18:00:00Z",
+  "readings": [
+    {"ts": "2026-10-10T07:00:00-05:00", "channel": "turbidity", "value": 14.2, "unit": "NTU"},
+    {"ts": "2026-10-10T07:15:00-05:00", "channel": "turbidity", "value": 14.9, "unit": "NTU"},
+    {"ts": "2026-10-10T12:00:00Z", "channel": "air_temp", "value": 24.5, "unit": "degC", "source": "weather-api"},
+    {"ts": "2026-10-10T12:00:00Z", "channel": "dissolved_oxygen", "value": 7.4, "unit": "mg/L", "kind": "label", "source": "lab", "meta": {"sample_id": "S-102"}}
+  ]
+}

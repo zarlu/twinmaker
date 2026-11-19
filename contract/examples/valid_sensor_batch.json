@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "node_id": "node-upstream",
+  "source": "sensor",
+  "sent_at": "2026-10-10T15:04:05Z",
+  "firmware": "0.1.0",
+  "readings": [
+    {"ts": "2026-10-10T15:04:00Z", "channel": "water_temp", "value": 21.4, "unit": "degC", "quality": "good", "kind": "measurement", "meta": {}},
+    {"ts": "2026-10-10T15:04:00Z", "channel": "ph", "value": 7.9, "unit": "pH", "quality": "suspect", "meta": {"reason": "sensor_warming_up"}},
+    {"ts": "2026-10-10T15:04:00Z", "channel": "dissolved_oxygen", "value": 7.2, "unit": "mg/L"}
+  ]
+}

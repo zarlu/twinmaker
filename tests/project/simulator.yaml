@@ -1,0 +1,14 @@
+step_minutes: 15
+nodes: {node-intake: {}, node-downstream: {offsets: {water_temp: 1.0}}}
+channels:
+  air_temp: {base: 22, daily: {amplitude: 6, peak_hour: 15}, noise: {sd: 2, memory: 0.99}, decimals: 2}
+  water_temp:
+    base: 20
+    daily: {amplitude: 1, peak_hour: 17}
+    noise: {sd: 0.2, memory: 0.95}
+    depends_on: [{channel: air_temp, gain: 0.4, lag_hours: 3}]
+    clip: [0, 45]
+    decimals: 3
+faults:
+  spike: {channels: [water_temp], per_day: 0.3, size: 20}
+  dropout: {per_week: 1, duration_hours: 2}

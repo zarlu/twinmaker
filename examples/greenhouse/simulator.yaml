@@ -1,0 +1,49 @@
+# Invented greenhouse data. Arbitrary numbers chosen to exercise the pipeline; see
+# sim/generate.py for the formula. All rows are stored with source='simulator'.
+step_minutes: 10
+utc_offset_hours: 0
+nodes:
+  bay-1: {}
+  bay-2:
+    offsets: {air_temp: 1.0, humidity: -4}
+channels:
+  outside_temp:
+    base: 18
+    daily: {amplitude: 7, peak_hour: 15}
+    noise: {sd: 3, memory: 0.995}
+    jitter: 0.2
+    decimals: 1
+  light:
+    base: 18000
+    daily: {amplitude: 30000, peak_hour: 13}
+    noise: {sd: 4000, memory: 0.9}
+    clip: [0, 120000]              # night clips to 0
+    decimals: 0
+  air_temp:
+    base: 24
+    noise: {sd: 0.4, memory: 0.97}
+    depends_on:
+      - {channel: outside_temp, gain: 0.5, lag_hours: 1}
+      - {channel: light, gain: 0.00012, lag_hours: 1}   # sun warms the bay an hour later
+    jitter: 0.05
+    clip: [-10, 60]
+    decimals: 2
+  humidity:
+    base: 65
+    noise: {sd: 3, memory: 0.97}
+    depends_on:
+      - {channel: air_temp, gain: -2.0}
+    jitter: 0.3
+    clip: [0, 100]
+    decimals: 1
+  soil_moisture:
+    base: 40
+    noise: {sd: 4, memory: 0.999}
+    depends_on:
+      - {channel: air_temp, gain: -0.5, lag_hours: 3}
+    jitter: 0.2
+    clip: [0, 100]
+    decimals: 1
+faults:
+  spike: {channels: [air_temp], per_day: 0.1, size: 25}
+  dropout: {per_week: 0.5, duration_hours: 2}

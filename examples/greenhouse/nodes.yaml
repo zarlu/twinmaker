@@ -1,0 +1,4 @@
+schema_version: 1
+nodes:
+  - {node_id: bay-1, name: Bay 1, role: bay, position: 0, notes: Example node.}
+  - {node_id: bay-2, name: Bay 2, role: bay, position: 1, notes: Example node.}

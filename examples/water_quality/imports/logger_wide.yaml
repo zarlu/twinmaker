@@ -1,0 +1,16 @@
+# Mapping for a data-logger export with one row per time step (see sample_logger.csv).
+#   python -m connectors.csv_import examples/water_quality/imports/sample_logger.csv \
+#       --mapping examples/water_quality/imports/logger_wide.yaml
+format: wide
+timestamp:
+  column: Date Time
+  timezone: America/Chicago      # the file's clock; converted to UTC on import
+  format: "%m/%d/%Y %H:%M"
+node:
+  column: Site                   # or `value: node-upstream` for a single-site file
+source: logger-export
+columns:
+  Temp (F): {channel: water_temp, scale: 0.5555556, offset: -17.7777778}   # degF -> degC
+  pH: {channel: ph}
+  DO (mg/L): {channel: dissolved_oxygen}
+  Cond (mS/cm): {channel: conductivity, scale: 1000}                       # mS/cm -> uS/cm
